@@ -2,128 +2,101 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+public class hw4 {
+        public static void bubleSortAge(ArrayList<Integer> age, LinkedList<Integer> index) {
+            ArrayList<Integer> ageTmp = new ArrayList<>(age);
+            boolean sort = true;
+            int k = ageTmp.size();
+            while (sort) {
+                sort = false;
+                for (int i = 0; i < k - 1; i++) {
+                    if (ageTmp.get(i) > ageTmp.get(i + 1)) {
+                        int temp = ageTmp.get(i);
+                        ageTmp.set(i, ageTmp.get(i + 1));
+                        ageTmp.set(i + 1, temp);
 
-public class sem4 {
-    public static void bubleSortAge(ArrayList<Integer> age, LinkedList<Integer> index) {
-        ArrayList<Integer> ageTmp = new ArrayList<>(age);
-        boolean sort = true;
-        int k = ageTmp.size();
-        while (sort) {
-            sort = false;
-            for (int i = 0; i < k - 1; i++) {
-                if (ageTmp.get(i) > ageTmp.get(i + 1)) {
-                    int temp = ageTmp.get(i);
-                    ageTmp.set(i, ageTmp.get(i + 1));
-                    ageTmp.set(i + 1, temp);
+                        int temp2 = index.get(i);
+                        index.set(i, index.get(i + 1));
+                        index.set(i + 1, temp2);
+                        sort = true;
 
-                    int temp2 = index.get(i);
-                    index.set(i, index.get(i + 1));
-                    index.set(i + 1, temp2);
-                    sort = true;
+                    }
+
+                }
+                k--;
+            }
+        }
+
+
+        public static void sortGender(ArrayList<Boolean> gender, LinkedList<Integer> index) {
+            LinkedList<Integer> indexTemp = new LinkedList<>();
+
+            int cnt = index.size()-1;
+            while (cnt > -1) {
+                if (gender.get(index.get(cnt))) {
+                    int temp = index.get(cnt);
+                    index.remove(cnt);
+                    index.addFirst(temp);
+
+                }
+                cnt--;
+            }
+
+
+
+        }
+
+        public static void main(String[] args) {
+            LinkedList<Integer> index = new LinkedList<>();
+            ArrayList<String> lastname = new ArrayList<>();
+            ArrayList<String> firstname = new ArrayList<>();
+            ArrayList<String> fathersname = new ArrayList<>();
+            ArrayList<Integer> age = new ArrayList<>();
+            ArrayList<Boolean> gender = new ArrayList<>();
+
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Введите ФИО Возраст Пол");
+
+            boolean run = true;
+            while (run) {
+                String in = scanner.nextLine();
+                if (in.equals("x")) {
+                    run = false;
+                } else {
+                    String[] data = in.split(" ");
+                    index.add(lastname.size());
+                    lastname.add(data[0]);
+                    firstname.add(data[1]);
+                    fathersname.add(data[2]);
+                    age.add(Integer.parseInt(data[3]));
+                    gender.add(data[4].contains("f"));
 
                 }
 
             }
-            k--;
-        }
-    }
-
-
-    public static void sortGender(ArrayList<Boolean> gender, LinkedList<Integer> index) {
-    LinkedList<Integer> indexTemp = new LinkedList<>();
-
-        int cnt = index.size()-1;
-        while (cnt > -1) {
-            if (gender.get(index.get(cnt))) {
-                int temp = index.get(cnt);
-                index.remove(cnt);
-                index.addFirst(temp);
-
+            for (int i = 0; i < lastname.size(); i++) {
+                StringBuilder str = new StringBuilder();
+                str.append(lastname.get(i)).append(" ").append(firstname.get(i).charAt(0)).append(". ").append(fathersname.get(i).charAt(0)).append(". ");
+                System.out.println(str);
             }
-            cnt--;
-        }
-
-
-
-    }
-
-
-    public static void main(String[] args) {
-        LinkedList<Integer> index = new LinkedList<>();
-        ArrayList<String> lastname = new ArrayList<>();
-        ArrayList<String> firstname = new ArrayList<>();
-        ArrayList<String> fathersname = new ArrayList<>();
-        ArrayList<Integer> age = new ArrayList<>();
-        ArrayList<Boolean> gender = new ArrayList<>();
-
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите ФИО Возраст Пол");
-
-        boolean run = true;
-        while (run) {
-            String in = scanner.nextLine();
-            if (in.equals("x")) {
-                run = false;
-            } else {
-                String[] data = in.split(" ");
-                index.add(lastname.size());
-                lastname.add(data[0]);
-                firstname.add(data[1]);
-                fathersname.add(data[2]);
-                age.add(Integer.parseInt(data[3]));
-                gender.add(data[4].contains("f"));
-
+            System.out.println("*".repeat(10));
+            bubleSortAge(age, index);
+            for (int i : index) {
+                StringBuilder str = new StringBuilder();
+                str.append(lastname.get(i)).append(" ").append(firstname.get(i).charAt(0)).append(". ").append(fathersname.get(i).charAt(0)).append(". ");
+                System.out.println(str);
             }
+            System.out.println("*".repeat(10));
+            sortGender(gender, index);
 
-        }
-        for (int i = 0; i < lastname.size(); i++) {
-            StringBuilder str = new StringBuilder();
-            str.append(lastname.get(i)).append(" ").append(firstname.get(i).charAt(0)).append(". ").append(fathersname.get(i).charAt(0)).append(". ");
-            System.out.println(str);
-        }
-        System.out.println("*".repeat(10));
-        bubleSortAge(age, index);
-        for (int i : index) {
-            StringBuilder str = new StringBuilder();
-            str.append(lastname.get(i)).append(" ").append(firstname.get(i).charAt(0)).append(". ").append(fathersname.get(i).charAt(0)).append(". ");
-            System.out.println(str);
-        }
-        System.out.println("*".repeat(10));
-        sortGender(gender, index);
-
-        for (int i : index) {
-            StringBuilder str = new StringBuilder();
-            str.append(lastname.get(i)).append(" ").append(firstname.get(i).charAt(0)).append(". ").append(fathersname.get(i).charAt(0)).append(". ");
-            System.out.println(str);
+            for (int i : index) {
+                StringBuilder str = new StringBuilder();
+                str.append(lastname.get(i)).append(" ").append(firstname.get(i).charAt(0)).append(". ").append(fathersname.get(i).charAt(0)).append(". ");
+                System.out.println(str);
+            }
         }
     }
-}
-
-
-
-
-
-
-
-        //System.out.println(list);
-
-
-
-      /*  System.out.println("Введите ФИО");
-        String name = in.nextLine ();
-        list.add([name]);
-
-        System.out.println("Введите возраст");
-        int age = in.nextInt ();
-        list.add([age]);
-
-        System.out.println("Введите пол");
-        String gender = in.nextLine();
-        list.add([gender]);
-
-        System.out.printf("Name" +name +"Age:" + age + "Gender:" +gender);
-        in.close();*/
 
 
 
